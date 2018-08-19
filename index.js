@@ -1,4 +1,4 @@
-const app = require('express');
+const app = require('express')();
 const http = require('http').Server(app);
 
 app.get('/', function(req,res){
