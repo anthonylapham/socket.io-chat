@@ -5,28 +5,29 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const people = {};
 
-
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function(req, res) {
   res.sendFile(__dirname + '/index.html');
 });
 
-//broadcast to users that someone is typing
-io.on('is typing', function(data){
-  io.emit('typing');
-});
-
 io.on('connection', (socket) => {
+  socket.broadcast.emit('userHasJoined', 'A new user has joined!')
+
   socket.on('chat message', function(msg) {
     //people[client.id] = name;
     io.emit('chat message', msg);
     //socket.sockets.emit('update,' + name + 'has joined!');
   });
-  console.log('A user connected');
+
   socket.on('disconnect', () => {
     //socket.sockets.emit('update,' + name + 'has left the chat');
     console.log('User disconnect');
+  });
+
+  //broadcast to users that someone is typing
+  socket.on('is typing', function(data){
+    io.emit('typing');
   });
 });
 
