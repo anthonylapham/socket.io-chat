@@ -12,7 +12,7 @@ app.get('/', function(req, res) {
 });
 
 io.on('connection', (socket) => {
-  socket.broadcast.emit('userHasJoined', 'A new user has joined!')
+  socket.emit('userHasJoined', 'A new user has joined!')
 
   socket.on('chat message', function(msg) {
     //people[client.id] = name;
