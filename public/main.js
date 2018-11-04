@@ -1,26 +1,35 @@
+let userName = '';
+
 $(function() {
   const socket = io();
+  userName = prompt('Enter your username');
+
   $('form').submit(function() {
-    socket.emit('chat message', $('#m').val());
-    $('m').val('');
+    socket.emit('sendMessage',`${userName}: ${$('#m').val()}`);
+    $('#messages').append(`<li class="myMessage">Me: ${$('#m').val()}</li>`);
+    $('#m').val('');
     return false;
   });
 
-  socket.on('chat message', function(msg) {
-    $('#messages').append($('<li>').text(msg));
+  $('#m').keyup(function(e) {
+    if(e.keyCode === 13){
+      return;
+    }
+    else{
+      _.debounce(socket.emit('userIsTyping', userName), 500)
+    }
   });
 
-  socket.on('userHasJoined', function(message) {
-    alert(message);
+  socket.on('receiveMessage', function(msg) {
+    $('#messages').append(`<li>${msg}</li>`);
+  });
+
+  socket.on('alerts', function(message) {
+    const el = document.getElementById('alerts');
+    el.innerText = message;
+    setTimeout(function() {
+      el.innerText = '';
+    }, 3000);
   })
 
-});
-
-$('#m').keyup(function(e){
-  if(e.keyCode === 13){
-    socket.emit('send', {msg: $('#messages').val()});
-  }
-  else{
-    socket.emit('user is typing', {msg: $('#messages').val()});
-  }
 });

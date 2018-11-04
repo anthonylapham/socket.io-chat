@@ -44,3 +44,7 @@ form button {
 #messages li: nth-child(odd) {
   background: #eee;
 }
+
+.myMessage {
+  text-align: right;
+}

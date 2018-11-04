@@ -12,11 +12,11 @@ app.get('/', function(req, res) {
 });
 
 io.on('connection', (socket) => {
-  socket.emit('userHasJoined', 'A new user has joined!')
+  socket.broadcast.emit('alerts', 'A new user has joined!')
 
-  socket.on('chat message', function(msg) {
+  socket.on('sendMessage', function(msg) {
     //people[client.id] = name;
-    io.emit('chat message', msg);
+    socket.broadcast.emit('receiveMessage', msg);
     //socket.sockets.emit('update,' + name + 'has joined!');
   });
 
@@ -26,8 +26,8 @@ io.on('connection', (socket) => {
   });
 
   //broadcast to users that someone is typing
-  socket.on('is typing', function(data){
-    io.emit('typing');
+  socket.on('userIsTyping', function(userName){
+    socket.broadcast.emit('alerts', `${userName} is typing...`);
   });
 });
 

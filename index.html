@@ -7,9 +7,11 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <script src='/socket.io/socket.io.js'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.core.min.js"></script>
 <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 <script src="main.js"></script>
 <body>
+  <h1 id="alerts"></h1>
   <ul id='messages'></ul>
   <form action="">
     <input id="m" autocomplete="off"/><button>Send</button>
