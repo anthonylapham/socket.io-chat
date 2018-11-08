@@ -45,6 +45,13 @@ form button {
   background: #eee;
 }
 
+#alerts{
+  font-size: 17px;
+  font-family: Lucida Sans Unicode, Lucida Grande, sans-serif;
+  text-align: center;
+}
+
 .myMessage {
   text-align: right;
+
 }

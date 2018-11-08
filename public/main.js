@@ -2,7 +2,7 @@ let userName = '';
 
 $(function() {
   const socket = io();
-  userName = prompt('Enter your username');
+  userName = prompt('Enter your username').bold();
 
   $('form').submit(function() {
     socket.emit('sendMessage',`${userName}: ${$('#m').val()}`);

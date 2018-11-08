@@ -15,13 +15,10 @@ io.on('connection', (socket) => {
   socket.broadcast.emit('alerts', 'A new user has joined!')
 
   socket.on('sendMessage', function(msg) {
-    //people[client.id] = name;
     socket.broadcast.emit('receiveMessage', msg);
-    //socket.sockets.emit('update,' + name + 'has joined!');
   });
 
   socket.on('disconnect', () => {
-    //socket.sockets.emit('update,' + name + 'has left the chat');
     console.log('User disconnect');
   });
 
